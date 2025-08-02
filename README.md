@@ -168,15 +168,7 @@ npm install
 
 ### 2. Database Setup
 
-#### Option A: Local PostgreSQL
-```bash
-# Install PostgreSQL locally
-# Create database
-createdb powersync_rbac
-```
-
-#### Option B: Cloud PostgreSQL (DigitalOcean/AWS/etc.)
-Create a PostgreSQL instance on your preferred cloud provider.
+Create a PostgreSQL instance on your preferred cloud provider (DigitalOcean, AWS RDS, Google Cloud SQL, etc.).
 
 ### 3. Create Database Tables
 
