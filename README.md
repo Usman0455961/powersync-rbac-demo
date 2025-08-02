@@ -455,6 +455,9 @@ op.table → operation.type → API handler
 
 ## 🔍 Testing the Complete Flow
 
+### 1. Real-time Sync Testing
+
+**Test Client → Database Flow:**
 1. **Create a user** in `/rbac-test`
 2. **Check Browser DevTools** → Application → IndexedDB (local storage)
 3. **Check Terminal** for sync API logs:
@@ -465,6 +468,39 @@ op.table → operation.type → API handler
    ```
 4. **Verify PostgreSQL** database for the new record
 5. **Open multiple browser tabs** to see real-time sync
+
+**Test Database → Client Flow:**
+1. **Manually insert a record** directly in your PostgreSQL database:
+   ```sql
+   INSERT INTO users (name, email, role_id) VALUES 
+   ('Test User', 'test@example.com', (SELECT id FROM roles WHERE name = 'admin'));
+   ```
+2. **Watch your client update in real-time** - the new user will appear instantly in all connected browser tabs
+3. **No page refresh needed** - PowerSync automatically syncs the change to all clients
+
+### 2. Offline Functionality Testing
+
+**Test Offline Queue Management:**
+1. **Open Chrome DevTools** → Network tab
+2. **Enable "Offline" mode** (or throttle to "Offline")
+3. **Create multiple operations while offline:**
+   - Add 3-4 new users
+   - Create 2-3 new roles
+   - Add several permissions
+   - Assign permissions to roles
+4. **Check IndexedDB** → You'll see all data stored locally
+5. **Disable offline mode** (restore internet connection)
+6. **Watch the magic happen:**
+   - PowerSync automatically detects connection restore
+   - All queued operations are sent to backend sequentially
+   - Database gets updated with all offline changes
+   - Other connected clients receive all updates in real-time
+
+**What to Observe:**
+- **Instant UI updates** even when offline
+- **Persistent local storage** - data remains after page refresh
+- **Sequential sync** - operations are processed in correct order when online
+- **Conflict resolution** - PowerSync handles any data conflicts gracefully
 
 ## 🚨 Troubleshooting
 
