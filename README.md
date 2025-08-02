@@ -218,6 +218,21 @@ CREATE TABLE role_permissions (
 CREATE INDEX idx_users_role_id ON users(role_id);
 CREATE INDEX idx_role_permissions_role_id ON role_permissions(role_id);
 CREATE INDEX idx_role_permissions_permission_id ON role_permissions(permission_id);
+
+-- Create PowerSync publication (required for PowerSync to track changes)
+CREATE PUBLICATION powersync FOR ALL TABLES;
+
+-- What does this publication do?
+-- A PostgreSQL publication is part of logical replication that defines which tables
+-- and what changes (INSERT, UPDATE, DELETE) should be tracked and made available
+-- to external systems like PowerSync.
+--
+-- Why is it needed?
+-- - PowerSync uses PostgreSQL's logical replication to detect real-time changes
+-- - Without this publication, PowerSync cannot see when data changes in your database
+-- - The publication acts as a "change feed" that PowerSync subscribes to
+-- - This enables bi-directional sync: changes flow from database → PowerSync → clients
+-- - Essential for real-time updates across all connected devices/browsers
 ```
 
 ### 4. Populate Sample Data
