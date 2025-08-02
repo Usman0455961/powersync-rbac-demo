@@ -384,12 +384,7 @@ Visit `http://localhost:3000` to see the application.
 
 ## 📱 Features & Pages
 
-### 1. Home Page (`/`)
-- Project overview and navigation
-- Quick start guide
-- Feature highlights
-
-### 2. RBAC Test (`/rbac-test`)
+### RBAC Test (`/rbac-test`)
 - Create users, roles, and permissions
 - Assign permissions to roles
 - Real-time data display
